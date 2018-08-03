@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+  compileSdkVersion build_versions.target_sdk
+  defaultConfig {
+    applicationId "thaihn.com.weatherapp"
+    minSdkVersion build_versions.min_sdk
+    targetSdkVersion build_versions.target_sdk
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    buildConfigField "String", "API_KEY", "\"${API_KEY}\""
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  dataBinding {
+    enabled = true
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+  implementation deps.kotlin.stdlib
+
+  implementation deps.app_compat
+  implementation deps.constraint_layout
+  implementation deps.material_design
+  implementation deps.support
+
+  implementation 'com.google.android.gms:play-services-maps:15.0.1'
+  implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
+  testImplementation deps.test.junit
+  androidTestImplementation deps.test.runner
+  androidTestImplementation deps.test.espresso
+
+  // Location
+  implementation deps.play_service.location
+
+  // Retrofit
+  implementation deps.retrofit.runtime
+  implementation deps.retrofit.gson
+  implementation deps.retrofit.adapter_rx
+
+  // Room
+  implementation deps.room.runtime
+  implementation deps.room.rxjava2
+
+  // lifecycle
+  implementation deps.lifecycle.extensions
+  implementation deps.lifecycle.java8
+
+  // Rx
+  implementation deps.rx.rx_android
+  implementation deps.rx.rx_java2
+
+  // Dagger
+  implementation deps.dagger.dagger
+  implementation deps.dagger.android
+  implementation deps.dagger.android_support
+  kapt deps.dagger.android_support_compiler
+  kapt deps.dagger.compiler
+
+  implementation deps.glide.glide
+  kapt deps.glide.compiler
+  implementation deps.glide.integration
+}
